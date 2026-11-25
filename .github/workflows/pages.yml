@@ -1,0 +1,52 @@
+# Publica la carpeta web/ a GitHub Pages cada cop que fas "push" a la rama main.
+# Les dades es xifren al teu PC (tools/xifrar.py): aquí NO hi ha CSV ni contrasenya.
+name: Publicar a GitHub Pages
+
+on:
+  push:
+    branches: [main,master]
+  workflow_dispatch:      # permet llançar-lo a mà des de la pestanya Actions
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descarregar el codi
+        uses: actions/checkout@v5
+
+      - name: Comprovar que només es publiquen dades xifrades
+        run: |
+          test -f web/data/dades.enc.json || { echo "::error::Falta web/data/dades.enc.json (executa tools/xifrar.py)"; exit 1; }
+          extra=$(ls -A web/data | grep -v '^dades.enc.json$' || true)
+          if [ -n "$extra" ]; then
+            echo "::error::Hi ha fitxers sense xifrar a web/data: $extra"
+            exit 1
+          fi
+
+      - name: Configurar Pages
+        uses: actions/configure-pages@v5
+
+      - name: Empaquetar la carpeta web
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: web
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Publicar
+        id: deployment
+        uses: actions/deploy-pages@v4

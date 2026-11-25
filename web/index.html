@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="ca">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Pròximes sortides</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div id="rellotge">--:--</div>
+    <div id="data"></div>
+    <div id="temps" class="temps"></div>
+  </header>
+
+  <!-- Pantalla de contrasenya: les dades estan xifrades i només es veuen amb la contrasenya -->
+  <div id="bloqueig" class="bloqueig" hidden>
+    <form id="form-clau" autocomplete="on">
+      <h2>🔒 Panell privat</h2>
+      <div class="camp-clau">
+        <input id="clau" type="password" autocomplete="current-password" autocapitalize="off"
+               autocorrect="off" spellcheck="false" placeholder="Contrasenya" required>
+        <button type="button" id="mostra" class="icona" aria-label="Mostra o amaga la contrasenya">👁</button>
+      </div>
+      <button type="submit" id="entra" class="principal">Entra</button>
+      <p id="error-clau" role="alert"></p>
+    </form>
+  </div>
+
+  <div id="contingut" hidden>
+    <main>
+      <section class="grup">
+        <h2 class="titol-grup">🚌 Bus</h2>
+        <div id="bus" class="targetes"></div>
+      </section>
+      <section class="grup">
+        <h2 class="titol-grup">🚆 Tren <span id="nota-tren" class="nota-grup"></span></h2>
+        <div id="tren" class="targetes"></div>
+      </section>
+    </main>
+    <footer>
+      <div id="estat">Carregant…</div>
+      <button type="button" id="oblida" class="enllac">🔒 Oblida la contrasenya en aquest dispositiu</button>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

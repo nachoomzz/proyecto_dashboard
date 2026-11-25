@@ -1,0 +1,26 @@
+# ---- PRIVAT: no ha de pujar-se mai a GitHub (el repositori es public) ----
+# (la barra inicial limita cada regla a la carpeta de l'arrel del projecte)
+
+# El teu CSV d'horaris
+/data/
+
+# Linies, noms i lloc del temps
+/config/
+
+# Fitxers intermedis sense xifrar
+/build/
+
+# Conte la contrasenya de la wifi
+/esp32/
+
+# Xarxa de seguretat: a web/data nomes pot haver-hi el fitxer xifrat
+/web/data/*
+!/web/data/dades.enc.json
+
+# Logs i fitxers locals
+servidor.log
+__pycache__/
+*.pyc
+.idea/
+.venv/
+venv/
